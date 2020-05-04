@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+    <h1> Rock Paper Scissors in the Console (F12) </h1>
+    <script>
+       function pickRandomNumber() {
+           return Math.floor(Math.random()*3);
+       }
+
+       function computerPlay() {
+           let computerChoice = pickRandomNumber();
+           if (computerChoice == 1) {
+               return computerChoice = "rock";
+           } else if (computerChoice == 2) {
+               return computerChoice = "paper";
+           } else {
+               return computerChoice = "scissors";
+           }
+       }
+
+       function humanPlay() {
+           let humanChoice = prompt("rock, paper, scissors");
+           humanChoice = humanChoice.toLowerCase();
+           return humanChoice;
+       }
+
+       function tiedRound(pick) {
+           tie++;
+           return `You both picked ${pick}.  It's a tie!`; 
+       }
+
+       function winRound(computerChoice, humanChoice) {
+           win++;
+           return `${humanChoice} beats ${computerChoice} - you win this round!`;
+       }
+
+       function loseRound(computerChoice, humanChoice) {
+            lose++
+            return `${computerChoice} beats ${humanChoice} - you lose!`;
+       }
+
+
+       let win=0;
+       let lose=0;
+       let tie=0;
+
+       function oneRound(computerChoice, humanChoice) {
+            if (computerChoice == "rock") {
+                if (humanChoice == "rock") {
+                    return tiedRound(computerChoice);
+                } else if (humanChoice == "paper") {
+                    return winRound(computerChoice, humanChoice);
+                } else if (humanChoice == "scissors") {
+                    return loseRound(computerChoice, humanChoice);
+                }
+            } else if (computerChoice == "paper") {
+                if (humanChoice == "rock") {
+                    return loseRound(computerChoice, humanChoice);
+                } else if (humanChoice == "paper") {
+                    return tiedRound(computerChoice);
+                } else if (humanChoice == "scissors") {
+                    return winRound(computerChoice, humanChoice);
+                }
+            } else if (computerChoice == "scissors") {
+                if (humanChoice == "rock") {
+                    return winRound(computerChoice, humanChoice);
+                } else if (humanChoice == "paper") {
+                    return loseRound(computerChoice, humanChoice);
+                } else if (humanChoice == "scissors") {
+                    return tiedRound(computerChoice);
+                }
+            }
+       }
+
+       function game() {
+           numRounds = prompt("Number of Rounds?");
+           for (var i = 0; i < numRounds; i++) {
+            computerChoice = computerPlay();
+            humanChoice = humanPlay();
+            console.log(`Computer picked: ${computerChoice}`);
+            console.log(`Human picked: ${humanChoice}`);
+            console.log(oneRound(computerChoice, humanChoice));
+           };
+            
+            console.log(`You won ${win} rounds, lost ${lose} rounds, and tied ${tie} rounds`);
+            if (win > lose && win > tie) {
+                console.log(`you win!`);
+            } else {
+                console.log(`Better luck next time`);
+            }
+       }
+
+       game();
+      
+
+    </script>
+</body>
+</html>
