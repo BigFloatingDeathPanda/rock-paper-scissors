@@ -3,9 +3,64 @@
 <head>
     <title>Rock Paper Scissors</title>
     <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1> Rock Paper Scissors in the Console (F12) </h1>
+
+    <div class="human">
+        <div style="font-size: 40px">
+            You there, Human! Pick One:
+        </div>
+        <button data-key="85" id="rockbutton">
+            <span>ROCK</span>
+        </button>
+        <button data-key="80" id="paperbutton">
+            <span>PAPER</span>
+        </button>
+        <button data-key="83" id="scissorsbutton">
+            <span>SCISSORS</span>
+        </button>
+    </div>
+
+    <div class="computer">
+        <div style="font-size: 40px">
+            The computer picked ... 
+        </div>
+        <div id="computerRock" class="computerstyle" hidden>
+            <span>ROCK</span>
+        </div>
+        <div id="computerPaper" class="computerstyle" hidden>
+            <span>PAPER</span>
+        </div>
+        <div id="computerScissors" class="computerstyle" hidden>
+            <span>SCISSORS</span>
+        </div>
+    </div>
+
+    <div class="displayResults">
+       <div id="runningResults" >
+            <div id="currentHumanScore">
+                Human Score: 0
+            </div>
+            <div id="currentComputerScore">
+                Computer Score: 0
+            </div>
+            <div id="currentNumberOfTies">
+                Number of Ties So Far: 0
+            </div>
+            <div id="currentWinnerMessage">
+                Current Weiner: No One
+            </div>
+        </div>
+        <div>
+            <button id="playAgain">Play Another Round?</button>
+        </div>
+    </div>
+
+    <footer>
+        Rock Paper Scissors Copyright 1995 By Steve Jobby
+    </footer>
+
     <script>
        function pickRandomNumber() {
            return Math.floor(Math.random()*3);
@@ -13,33 +68,45 @@
 
        function computerPlay() {
            let computerChoice = pickRandomNumber();
+           const rockOn = document.getElementById("computerRock");
+           const paperOn = document.getElementById("computerPaper");
+           const scissorsOn = document.getElementById("computerScissors");
+           sleep(250);
            if (computerChoice == 1) {
+               rockOn.hidden = false;
                return computerChoice = "rock";
            } else if (computerChoice == 2) {
+               paperOn.hidden = false;
                return computerChoice = "paper";
            } else {
+               scissorsOn.hidden = false;
                return computerChoice = "scissors";
            }
        }
 
-       function humanPlay() {
-           let humanChoice = prompt("rock, paper, scissors");
-           humanChoice = humanChoice.toLowerCase();
-           return humanChoice;
+       function sleep(milliseconds) {
+           const date = Date.now();
+           let currentDate = null;
+           do {
+               currentDate = Date.now();
+           } while (currentDate - date < milliseconds);
        }
+
 
        function tiedRound(pick) {
            tie++;
-           return `You both picked ${pick}.  It's a tie!`; 
+           return "tie"; 
        }
 
        function winRound(computerChoice, humanChoice) {
            win++;
-           return `${humanChoice} beats ${computerChoice} - you win this round!`;
+           return "win";
+           //return `${humanChoice} beats ${computerChoice} - you win this round!`;
        }
 
        function loseRound(computerChoice, humanChoice) {
-            lose++
+            lose++;
+            return "lose";
             return `${computerChoice} beats ${humanChoice} - you lose!`;
        }
 
@@ -76,28 +143,97 @@
             }
        }
 
-       function game() {
-           numRounds = prompt("Number of Rounds?");
-           for (var i = 0; i < numRounds; i++) {
+       function game(humanChoice) {
             computerChoice = computerPlay();
-            humanChoice = humanPlay();
+
+
             console.log(`Computer picked: ${computerChoice}`);
             console.log(`Human picked: ${humanChoice}`);
+
+            return oneRound(computerChoice, humanChoice);
+            /*            
             console.log(oneRound(computerChoice, humanChoice));
-           };
-            
+
             console.log(`You won ${win} rounds, lost ${lose} rounds, and tied ${tie} rounds`);
             if (win > lose && win > tie) {
                 console.log(`you win!`);
             } else {
                 console.log(`Better luck next time`);
-            }
+            }*/
        }
 
-       window.onload = function() {
-           game();
+       const rockClick = document.getElementById("rockbutton");
+       rockClick.addEventListener("click", function(e){chooseYourWeapon(e, "rock");});
+       
+       const paperClick = document.getElementById("paperbutton");
+       paperClick.addEventListener("click", function(e){chooseYourWeapon(e, "paper");});
+
+       const scissorsClick = document.getElementById("scissorsbutton");
+       scissorsClick.addEventListener("click", function(e){chooseYourWeapon(e, "scissors");});
+
+       const playAgainClick = document.getElementById("playAgain");
+       playAgainClick.addEventListener("click", resetTheGame);
+
+       function resetTheGame() {
+            const rockOn = document.getElementById("computerRock");
+            const paperOn = document.getElementById("computerPaper");
+            const scissorsOn = document.getElementById("computerScissors");
+            const myRock = document.getElementById("rockbutton");
+            const myPaper = document.getElementById("paperbutton");
+            const myScissors = document.getElementById("scissorsbutton");
+
+            rockOn.hidden=true;
+            paperOn.hidden=true;
+            scissorsOn.hidden=true;
+
+            myRock.className="";
+            myPaper.className="";
+            myScissors.className="";
        }
-      
+
+       function alertPlayAgain() {
+            alert(`Press the "Play Another Round?" button to play again`);
+            return;
+       }
+
+       function chooseYourWeapon(e, myInput) {
+            const myRock = document.getElementById("rockbutton");
+            const myPaper = document.getElementById("paperbutton");
+            const myScissors = document.getElementById("scissorsbutton");
+            if (myRock.className=="red" || myPaper.className=="red" || myScissors.className=="red") {
+                alertPlayAgain();
+                return;
+            };
+
+            const turnRed = document.getElementById(`${myInput}button`);
+            turnRed.className="red";
+            let myResult = game(myInput);
+
+            updateScore();
+       }
+
+       function updateScore() {
+        const humanScore = document.getElementById("currentHumanScore");
+            humanScore.innerHTML = `Human Score: ${win}`;
+
+            const computerScore = document.getElementById("currentComputerScore");
+            computerScore.innerHTML = `Computer Score: ${lose}`;
+
+            const numberOfTies = document.getElementById("currentNumberOfTies");
+            numberOfTies.innerHTML = `Number of Ties So Far: ${tie}`;
+
+            const currentWinner = document.getElementById("currentWinnerMessage");
+            if (win>lose) {
+                currentWinner.innerHTML = `Current Weiner: You, Human!`;
+                return;
+            } else if (lose>win) {
+                currentWinner.innerHTML = `Current Weiner: Your Computer Overlords!`;
+                return;
+            } else {
+                currentWinner.innerHTML = `Current Weiner: It's a tie`;
+                return;
+            }
+       }
 
     </script>
 </body>
