@@ -1,0 +1,83 @@
+html {
+    font-size: 10px;
+    background: url(https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/images/sn-rockpaper.jpg?itok=4WUMt1oc) bottom center;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+}
+
+
+body,html {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.human {
+    display: flex;
+    flex: 1;
+    top: 150px;
+    align-items: center;
+    justify-content: left;
+}
+
+.computer {
+    display: flex;
+    flex: 1;
+    top: 100px;
+    align-items: center;
+    justify-content: left;
+}
+
+button, .computerstyle {
+    border: .4rem solid black;
+    border-radius: .5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    padding: 1rem .5rem;
+    transition: all .1s ease;
+    width: 10rem;
+    text-align: center;
+    color: white;
+    background: rgba(0,0,0,0.4);
+    text-shadow: 0 0 .5rem black;
+  }
+
+.displayResults {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: absolute bottom;
+    
+    align-items: center;
+    justify-content: flex-end;
+    bottom: 500px;
+    font-size: 30px;
+}
+
+.red {
+    border-color: red;
+}
+
+.red:hover {
+    border-color: red;
+    box-shadow: 0 0 2rem red;
+}
+
+#currentWinnerMessage {
+    font-weight: bold;
+}
+
+
+
+button:hover {
+    transform: scale(1.1);
+    border-color: yellow;
+    box-shadow: 0 0 1rem #ffc600;
+}
+
+
