@@ -45,18 +45,33 @@ button, .computerstyle {
     color: white;
     background: rgba(0,0,0,0.4);
     text-shadow: 0 0 .5rem black;
+    border-radius: 5rem;
   }
 
 .displayResults {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
     position: absolute bottom;
-    
-    align-items: center;
-    justify-content: flex-end;
+    width: 90%;
+    align-items: flex-start;
+    justify-content: flex-start;
     bottom: 500px;
     font-size: 30px;
+}
+
+#runningResults {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 50%;
+}
+
+#playAgain {
+    display: flex;
+    align-items: flex-end;
+    width: 85%;
 }
 
 .red {
